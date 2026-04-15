@@ -16,6 +16,7 @@ class TermResponse(BaseModel):
     word: str
     meaning_uz: str
     meaning_en: str
+    meaning_ru: str
     meaning_kr: str
     meaning_jp: str
     category: str = None
@@ -34,6 +35,8 @@ def read_terms(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 def get_or_create_term(request: TermRequest, db: Session = Depends(get_db)):
     term, source = term_service.create_or_translate_term(db, request.word, request.source_lang)
     if not term:
+        if source == "quota":
+            raise HTTPException(status_code=429, detail="AI Quota limit reached. Please wait 1 minute before next request.")
         raise HTTPException(status_code=503, detail="Translation service error")
     
     # Add source info for frontend

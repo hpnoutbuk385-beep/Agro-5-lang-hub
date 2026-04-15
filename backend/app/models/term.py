@@ -9,6 +9,7 @@ class Term(Base):
     word = Column(String, index=True)
     meaning_uz = Column(String, index=True)
     meaning_en = Column(String, index=True)
+    meaning_ru = Column(String, index=True)  # Russian
     meaning_kr = Column(String, index=True)  # Karakalpak
     meaning_jp = Column(String, index=True)
     category = Column(String, index=True, nullable=True)

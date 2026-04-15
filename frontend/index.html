@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style.css?v=5">
 </head>
 <body>
 
@@ -110,7 +110,7 @@
                     <div class="action-center">
                         <span class="source-tag hidden" id="source-tag">DB</span>
                     </div>
-                    <button class="btn-translate ripple" id="translate-btn" onclick="translateWord()" data-tooltip="tt_trans_btn" data-i18n-tooltip>
+                    <button class="btn-translate ripple" id="translate-btn" onclick="translateWord()">
                         <span class="btn-t-text" data-i18n="btn_trans">Tarjima qilish</span>
                         <svg class="btn-t-spinner hidden" id="btn-spinner" width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="0.7s" repeatCount="indefinite"/></circle></svg>
                     </button>
@@ -156,6 +156,6 @@
         <span id="toast-msg"></span>
     </div>
 
-    <script src="/static/js/app.js"></script>
+    <script src="/static/js/app.js?v=5"></script>
 </body>
 </html>

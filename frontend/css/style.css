@@ -506,7 +506,8 @@ kbd {
     display: flex; align-items: center; gap: 8px;
     transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
     box-shadow: 0 2px 12px rgba(74,222,128,0.15);
-    position: relative; overflow: hidden;
+    position: relative;
+    /* overflow: hidden;  <-- This was cutting tooltips. Ripple now has its own container. */
 }
 
 .btn-translate::before {
@@ -520,16 +521,20 @@ kbd {
 .btn-translate:hover::before { left: 100%; }
 
 .btn-translate:hover {
+    background: #0d1a12; /* Darker green background on hover */
+    color: var(--green);
+    border: 1px solid var(--green);
     box-shadow: 0 4px 24px rgba(74,222,128,0.3);
     transform: translateY(-1px);
 }
 
-.btn-translate:active {
-    transform: translateY(0) scale(0.97);
-    box-shadow: 0 1px 8px rgba(74,222,128,0.15);
+.btn-translate.loading {
+    background: #0d1a12 !important;
+    color: var(--green) !important;
+    border: 1px solid var(--green);
+    cursor: wait;
 }
 
-.btn-translate.loading .btn-t-text { display: none; }
 .btn-translate.loading .btn-t-spinner { display: inline-flex !important; }
 
 /* ---- Source Tag ---- */

@@ -11,6 +11,7 @@ def get_term_by_word(db: Session, word: str, lang: str = None):
         col_map = {
             "uz": Term.meaning_uz,
             "en": Term.meaning_en,
+            "ru": Term.meaning_ru,
             "kr": Term.meaning_kr,
             "jp": Term.meaning_jp
         }
@@ -23,6 +24,7 @@ def get_term_by_word(db: Session, word: str, lang: str = None):
         (func.lower(Term.word) == word_lower) |
         (func.lower(Term.meaning_uz) == word_lower) |
         (func.lower(Term.meaning_en) == word_lower) |
+        (func.lower(Term.meaning_ru) == word_lower) |
         (func.lower(Term.meaning_kr) == word_lower) |
         (func.lower(Term.meaning_jp) == word_lower)
     ).first()
@@ -33,6 +35,7 @@ def search_terms(db: Session, query: str, limit: int = 20):
         (func.lower(Term.word).like(q)) |
         (func.lower(Term.meaning_uz).like(q)) |
         (func.lower(Term.meaning_en).like(q)) |
+        (func.lower(Term.meaning_ru).like(q)) |
         (func.lower(Term.meaning_kr).like(q)) |
         (func.lower(Term.meaning_jp).like(q))
     ).limit(limit).all()
@@ -45,6 +48,9 @@ def create_or_translate_term(db: Session, word: str, source_lang: str):
 
     # 2. Translate using AI
     translations = translate_term(word, source_lang)
+    if isinstance(translations, dict) and translations.get("error") == "quota":
+        return None, "quota"
+    
     if not translations:
         return None, "error"
 
@@ -53,6 +59,7 @@ def create_or_translate_term(db: Session, word: str, source_lang: str):
         word=word,
         meaning_uz=translations.get("meaning_uz", ""),
         meaning_en=translations.get("meaning_en", ""),
+        meaning_ru=translations.get("meaning_ru", ""),
         meaning_kr=translations.get("meaning_kr", ""),
         meaning_jp=translations.get("meaning_jp", ""),
         category="general"
