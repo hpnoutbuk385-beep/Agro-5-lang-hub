@@ -1,15 +1,161 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uz" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agro 5 Lab Hub</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="Agro 5 Lab Hub">
+    <title data-i18n="title">Agro 5 Lab Hub — Ko'p tilli agro terminologiya</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <main>
-        <h1>Frontend removed</h1>
-        <p>This project is currently backend-only.</p>
-    </main>
+
+    <div class="app-wrapper">
+
+        <!-- Header -->
+        <header class="header" id="header">
+            <div class="logo">
+                <svg class="logo-leaf" viewBox="0 0 32 32" fill="none">
+                    <path d="M16 2C11 2 7 7 7 13C7 19 11 24 16 32C21 24 25 19 25 13C25 7 21 2 16 2Z" fill="url(#lg)"/>
+                    <defs><linearGradient id="lg" x1="7" y1="2" x2="25" y2="32"><stop offset="0%" stop-color="#4ade80"/><stop offset="100%" stop-color="#16a34a"/></linearGradient></defs>
+                </svg>
+                <div>
+                    <h1><span class="w">Agro 5</span> <span class="g" data-i18n="lab">laboratoriya markazi</span></h1>
+                    <p class="sub" data-i18n="subtitle">Ko'p tilli qishloq xo'jaligi terminologiyasi</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <!-- UI Language Selector -->
+                <div class="ui-lang-select">
+                    <select id="ui-lang" onchange="changeUILang()" class="ripple">
+                        <option value="uz">🇺🇿 O'Z</option>
+                        <option value="kr">🇺🇿 QR</option>
+                        <option value="en">🇬🇧 EN</option>
+                        <option value="jp">🇯🇵 JP</option>
+                        <option value="ru">🇷🇺 RU</option>
+                    </select>
+                </div>
+                <!-- Theme Toggle -->
+                <button class="theme-toggle ripple" id="theme-toggle" onclick="toggleTheme()" data-tooltip="themeToggle" data-i18n-tooltip>
+                    <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                    <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+                <nav class="tabs" id="tabs">
+                    <button class="tab active ripple" data-tab="translate" onclick="switchTab('translate')" data-i18n="tab_translate">Tarjima</button>
+                    <button class="tab ripple" data-tab="dictionary" onclick="switchTab('dictionary')" data-i18n="tab_dict">Lug'at</button>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Keyboard Shortcut Hints -->
+        <div class="shortcut-bar">
+            <span class="shortcut-hint" data-tooltip="tt_translate" data-i18n-tooltip><kbd>Ctrl</kbd>+<kbd>Enter</kbd> <span data-i18n="k_trans">tarjima</span></span>
+            <span class="shortcut-hint" data-tooltip="tt_clear" data-i18n-tooltip><kbd>Esc</kbd> <span data-i18n="k_clear">tozalash</span></span>
+        </div>
+
+        <!-- ===== TRANSLATE VIEW ===== -->
+        <main class="view active" id="view-translate">
+
+            <div class="block">
+                <!-- Language Row -->
+                <div class="lang-row">
+                    <div class="lang-pick">
+                        <span class="lang-label" data-i18n="from_lang">Qaysi tildan</span>
+                        <select id="source-lang">
+                            <option value="en" selected data-i18n="en">🇬🇧 English</option>
+                            <option value="uz" data-i18n="uz">🇺🇿 O'zbekcha</option>
+                            <option value="kr" data-i18n="kr">🇺🇿 Qoraqalpogʻcha</option>
+                            <option value="jp" data-i18n="jp">🇯🇵 日本語</option>
+                            <option value="ru" data-i18n="ru">🇷🇺 Русский</option>
+                        </select>
+                    </div>
+                    <button class="swap ripple" onclick="swapLanguages()" data-tooltip="tt_swap" data-i18n-tooltip>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+                    </button>
+                    <div class="lang-pick">
+                        <span class="lang-label" data-i18n="to_lang">Qaysi tilga</span>
+                        <select id="target-lang">
+                            <option value="uz" selected data-i18n="uz">🇺🇿 O'zbekcha</option>
+                            <option value="en" data-i18n="en">🇬🇧 English</option>
+                            <option value="kr" data-i18n="kr">🇺🇿 Qoraqalpogʻcha</option>
+                            <option value="jp" data-i18n="jp">🇯🇵 日本語</option>
+                            <option value="ru" data-i18n="ru">🇷🇺 Русский</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Input / Output -->
+                <div class="io-row">
+                    <div class="io-col io-input">
+                        <textarea id="input-word" placeholder="So'z kiriting…" rows="3" maxlength="100" spellcheck="false" data-i18n-placeholder="placeholder_input"></textarea>
+                        <span class="char-count" id="char-count">0/100</span>
+                        <!-- Autocomplete suggestions -->
+                        <div class="autocomplete hidden" id="autocomplete"></div>
+                    </div>
+                    <div class="io-col io-output" id="io-output">
+                        <div class="placeholder-text" id="placeholder-text" data-i18n="placeholder_result">Natija shu yerda</div>
+                        <div class="result-list hidden" id="result-list"></div>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Action Row -->
+                <div class="action-row">
+                    <button class="btn-clear ripple" onclick="clearInput()" data-tooltip="tt_clear_btn" data-i18n-tooltip data-i18n="btn_clear">Tozalash</button>
+                    <div class="action-center">
+                        <span class="source-tag hidden" id="source-tag">DB</span>
+                    </div>
+                    <button class="btn-translate ripple" id="translate-btn" onclick="translateWord()" data-tooltip="tt_trans_btn" data-i18n-tooltip>
+                        <span class="btn-t-text" data-i18n="btn_trans">Tarjima qilish</span>
+                        <svg class="btn-t-spinner hidden" id="btn-spinner" width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="0.7s" repeatCount="indefinite"/></circle></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Search -->
+            <div class="block search-block">
+                <div class="search-row">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input type="text" id="search-input" placeholder="Bazadan qidirish…" autocomplete="off" spellcheck="false" data-i18n-placeholder="search_ph">
+                </div>
+                <div class="search-results hidden" id="search-results"></div>
+            </div>
+
+            <!-- Recent -->
+            <div class="block recent-block" id="recent-block">
+                <h3 class="block-title" data-i18n="recent_title">So'nggi tarjimalar</h3>
+                <div class="recent-list" id="recent-list">
+                    <p class="empty" id="recent-empty" data-i18n="recent_empty">Hali tarjimalar yo'q</p>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- ===== DICTIONARY VIEW ===== -->
+        <main class="view" id="view-dictionary">
+            <div class="block dict-head">
+                <h2 data-i18n="dict_title">Terminlar lug'ati</h2>
+                <p class="sub"><span data-i18n="dict_sub">Barcha saqlangan terminlar</span> &middot; <strong class="counter" id="stat-total" data-target="0">0</strong> <span data-i18n="dict_ta">ta</span></p>
+            </div>
+            <div class="dict-grid" id="dict-grid">
+                <div class="skel"></div><div class="skel"></div><div class="skel"></div>
+            </div>
+        </main>
+
+        <footer class="footer">© 2026 Agro 5 Lab Hub</footer>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast hidden" id="toast">
+        <span id="toast-icon"></span>
+        <span id="toast-msg"></span>
+    </div>
+
+    <script src="/static/js/app.js"></script>
 </body>
 </html>
